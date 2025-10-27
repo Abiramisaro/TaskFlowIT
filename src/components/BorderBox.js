@@ -12,7 +12,7 @@ const BorderBox = ({ children, style }) => {
 const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
-    borderColor: color.border, // or any color
+    borderColor: color.border,
     borderRadius: 10,
     padding: 15,
     marginVertical: 10,

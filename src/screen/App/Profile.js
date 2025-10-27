@@ -1,4 +1,4 @@
-import Feather from '@expo/vector-icons/Feather'; // <Feather name="edit-3" size={24} color="black" />
+import Feather from '@expo/vector-icons/Feather';
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
 import { BorderBox, RButton, RText } from '../../components';
 import App_Images from '../../theme/AppImage';

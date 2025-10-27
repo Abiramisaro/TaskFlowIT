@@ -15,7 +15,6 @@ import { RButton, RText, TextBox } from "../../components";
 import { useTaskStore } from "../../store/taskStore";
 import { color } from "../../theme/color";
 
-// Helper function to check changed fields
 const getChangedFields = (oldData, newData) => {
   const changed = {};
   Object.keys(newData).forEach((key) => {
@@ -25,7 +24,7 @@ const getChangedFields = (oldData, newData) => {
 };
 
 const UpdateTask = ({ navigation, route }) => {
-  const data = route?.params?.data; // ✅ safe optional chaining
+  const data = route?.params?.data; 
   const { updateTask, deleteTask } = useTaskStore();
 
   const [taskTitle, setTaskTitle] = useState("");
@@ -35,7 +34,6 @@ const UpdateTask = ({ navigation, route }) => {
   const [isCompleted, setIsCompleted] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Load route params safely once available
   useEffect(() => {
     if (data) {
       setTaskTitle(data.title || "");
@@ -46,7 +44,6 @@ const UpdateTask = ({ navigation, route }) => {
     }
   }, [data]);
 
-  // ✅ Early return if params are missing
   if (!data)
     return (
       <View style={styles.centered}>

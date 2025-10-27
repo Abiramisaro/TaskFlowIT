@@ -29,12 +29,10 @@ const [offlineTasks, setOfflineTasks] = useState([]);
       const netInfo = await NetInfo.fetch();
 
       if (netInfo.isConnected) {
-        // ✅ Online: fetch from Firebase and update AsyncStorage
         await fetchTasks();
         await AsyncStorage.setItem("cachedTasks", JSON.stringify(get().tasks || []));
       } else {
-        // ⚠️ Offline: load from AsyncStorage
-        const cached = await AsyncStorage.getItem("cachedTasks");
+        const cached = await AsyncStorage.getItem("tasks_data");
         if (cached) {
           const offlineTasks = JSON.parse(cached);
           setOfflineTasks(offlineTasks);
@@ -49,24 +47,57 @@ const [offlineTasks, setOfflineTasks] = useState([]);
 
   const activeTasks = tasks.length > 0 ? tasks : offlineTasks;
 
+// const processedTasks = activeTasks.map((task) => {
+
+//     const due = task.due_date ? new Date(task.due_date) : null;
+//     const now = new Date();
+
+//     let updatedStatus = task.status;
+//     if (due && due < now && task.status !== "completed") {
+//       updatedStatus = "overdue";
+//     }
+
+//     return {
+//       ...task,
+//       due_date: due ? due.toISOString() : null,
+//       status: updatedStatus,
+//     };
+//   });
+
 const processedTasks = activeTasks.map((task) => {
+  const due = task.due_date ? new Date(task.due_date) : null;
+  const now = new Date();
 
-    const due = task.due_date ? new Date(task.due_date) : null;
-    const now = new Date();
+  let updatedStatus = task.status;
 
-    let updatedStatus = task.status;
-    if (due && due < now && task.status !== "completed") {
+  if (due && task.status !== "completed") {
+    // 🔹 Normalize both dates to midnight (remove time)
+    const dueDateOnly = new Date(
+      due.getFullYear(),
+      due.getMonth(),
+      due.getDate()
+    );
+    const today = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate()
+    );
+
+    if (dueDateOnly < today) {
       updatedStatus = "overdue";
+    } else if (dueDateOnly.getTime() === today.getTime()) {
+      updatedStatus = "pending"; // due today but not overdue yet
     }
+  }
 
-    return {
-      ...task,
-      due_date: due ? due.toISOString() : null,
-      status: updatedStatus,
-    };
-  });
+  return {
+    ...task,
+    due_date: due ? due.toISOString() : null,
+    status: updatedStatus,
+  };
+});
 
-  const filteredTasks = processedTasks.filter((task) => {
+const filteredTasks = processedTasks.filter((task) => {
     const matchesFilter =
       filter === "All" || task.status?.toLowerCase() === filter.toLowerCase();
     const matchesSearch =
@@ -161,7 +192,6 @@ const processedTasks = activeTasks.map((task) => {
   );
 }
 
-// ✅ Helper functions
 const statusText = (status) => {
   switch (status) {
     case "overdue":
@@ -184,7 +214,6 @@ const getDueStyle = (status) => {
   }
 };
 
-// ✅ Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,

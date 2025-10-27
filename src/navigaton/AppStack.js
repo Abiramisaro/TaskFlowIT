@@ -44,10 +44,10 @@ const AppStack = () => {
         tabBarButton: (props) => (
             <Pressable
               {...props}
-              android_ripple={{ color: color.white }} // ripple effect on Android
-              style={() => [
+              android_ripple={{ color: color.white }} 
+                            style={() => [
                 props.style,
-                { backgroundColor: "white" }, // background on press
+                { backgroundColor: "white" },
               ]}
             />
           ),
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     fontWeight: "400",
   },
   activeLabel: {
-    fontWeight: "700", // bold when active
+    fontWeight: "700",  
     color: color.prime,
   },
   indicator: {
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     height: 3,
     backgroundColor: color.prime,
     position: "absolute",
-    top: -35, // line above text
+    top: -35, 
     borderRadius: 5,
   },
 });

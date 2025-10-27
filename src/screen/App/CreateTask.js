@@ -34,7 +34,6 @@ const onChangeDate = (event, selectedDate) => {
   setShowDatePicker(false); 
 };
 
-// Format date for display (e.g., "2025-10-26")
 const formattedDate = due_date.toISOString().split("T")[0];
 
 
