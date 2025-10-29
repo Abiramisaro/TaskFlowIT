@@ -1,12 +1,22 @@
 import Feather from '@expo/vector-icons/Feather';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
 import { BorderBox, RButton, RText } from '../../components';
-import App_Images from '../../theme/AppImage';
+import { useAuthStore } from '../../store/authStore';
 import { color } from '../../theme/color';
 
-const Profile = ({
-    params,
-}) => {
+const Profile = ({navigation}) => {
+    const {user, signOut} = useAuthStore();
+console.log(user,"user in profile screen....")
+     const SignOut_User = async () => {
+        try {
+          await GoogleSignin.signOut();
+          await signOut();
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
 const Content = ({iconName,title}) => (
     <View style={{flexDirection:'row',alignItems:'center',width: '30%'}}>
         <Feather name={iconName} color={color.placeHolder} size={18} />
@@ -23,9 +33,9 @@ const UserData = ({value,edit = true}) => (
 
     return(
     <ScrollView style={styles.container} scrollEnabled={true}>
-        <Image source={App_Images.timeSheet} style={styles.userPhoto} />
-        <RText content={'Abirami Saravanan' } style={styles.UserName} />
-        <RText content={'abiramisaravanatpr@gmail.com'} style={styles.mail}/>
+        <Image source={{uri : user.photo}} style={styles.userPhoto} />
+        <RText content={user.name } style={styles.UserName} />
+        <RText content={user.email} style={styles.mail}/>
         <BorderBox style={{marginTop:30,padding:20,flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
             <Content iconName = 'user' title = 'Name' />
             <UserData value={'Abirami Saravanan'}/>
@@ -47,7 +57,7 @@ const UserData = ({value,edit = true}) => (
             <UserData value={'September 10, 2025 '} edit={false}/>
 
             </BorderBox>
-                               <RButton buttonText={'Log Out'} buttonStyle={styles.logoutButton} textStyle={styles.logoutText} onPress={()=> console.log("Logout")} />
+                               <RButton buttonText={'Log Out'} buttonStyle={styles.logoutButton} textStyle={styles.logoutText} onPress={SignOut_User} />
 
     </ScrollView>
 )};

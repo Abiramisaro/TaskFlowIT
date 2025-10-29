@@ -8,10 +8,10 @@ const Root_Navigation
  = ({
     params,
 }) => {
-    const{ isLoggedIn} = useAuthStore()
+    const{ loggedIn} = useAuthStore();
     return(
     <NavigationContainer>
-    {isLoggedIn ? <AppStack /> : <AuthStack />}
+    {loggedIn ? <AppStack /> : <AuthStack />}
     </NavigationContainer>
 )};
 
