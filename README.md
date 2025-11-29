@@ -1,50 +1,95 @@
-# Welcome to your Expo app 👋
+# 🗂️ Task Management App(TaskFlow)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A simple yet powerful task management application built using **React Native (Expo)** with **Firebase Realtime Database** for cloud sync and **AsyncStorage** for offline access.  
+Users can create, edit, delete, and view tasks — with due dates, completion status, and automatic overdue detection.
 
-## Get started
+---
 
-1. Install dependencies
+## 🚀 Features Implemented
 
-   ```bash
-   npm install
-   ```
+- ✅ Add, update, delete, and view tasks  
+- ✅ Filter tasks by **All / Pending / Completed / Overdue**  
+- ✅ Search tasks by title  
+- ✅ Automatic overdue detection based on due date  
+- ✅ Offline data access (AsyncStorage caching)  
+- ✅ Firebase Realtime Database integration  
+- ✅ Zustand-based global state management  
+- ✅ Smooth navigation with React Navigation  
+- ✅ Clean and modern UI design  
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+## 🧰 Tech Stack Used
 
-In the output, you'll find options to open the app in a
+| Category | Technology 
+|-----------|-------------|
+| Framework | **React Native (Expo)** |
+| State Management | **Zustand** |
+| Database | **Firebase Realtime Database** |
+| Offline Storage | **AsyncStorage** |
+| Navigation | **React Navigation** |
+| UI Components | **React Native Paper / Custom Components** |
+| Icons | **Ionicons** |
+| Date Picker | **@react-native-community/datetimepicker** |
+| Network Check | **@react-native-community/netinfo** |
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## ⚙️ How to Run the App
 
 ```bash
-npm run reset-project
+# 1️⃣ Clone the repository
+git clone https://github.com/yourusername/task-manager.git
+cd taskflow
+
+# 2️⃣ Install dependencies
+npm install
+
+# 3️⃣ Start the app
+npx expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 🧭 State Management Approach
 
-## Learn more
+This app uses **Zustand** for global state management.
 
-To learn more about developing your project with Expo, look at the following resources:
+- 🗂️ Centralized store: `/store/taskStore.js`
+- ⚙️ Handles: `addTask`, `fetchTasks`, `updateTask`, `deleteTask`
+- 🔁 Automatically updates UI on state changes
+- 🧩 Easy to maintain and extend compared to Redux or Context API
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+---
 
-## Join the community
+## 🔄 Offline Sync Strategy
 
-Join our community of developers creating universal apps.
+- 💾 Uses **AsyncStorage** to store the latest fetched task list.
+- 🔍 On app focus:
+  - ✅ **If internet is available** → Fetch from Firebase → Update AsyncStorage.
+  - 🚫 **If offline** → Load tasks from AsyncStorage.
+- 🧠 Prevents user disruption during no-network conditions.
+- 🔧 Future-ready for background sync implementation.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
+
+## 🤖 AI Usage Disclosure
+
+> Used **ChatGPT (OpenAI GPT-5)** to generate and refine:
+> - Initial Firebase CRUD logic  
+> - Zustand store structure  
+> - Offline caching and NetInfo integration  
+> - README and documentation formatting  
+
+All generated code was **reviewed and customized** manually before integration.
+
+---
+
+## ⚠️ Known Issues or Limitations
+
+- ❗ Offline edits are **not yet synced** back to Firebase when the internet returns.
+-   Authentication is on progress - Firebase google Auth
+- 🚫 No **authentication or user-specific task filtering** implemented.  
+- 📱 UI may need **optimization for larger datasets**.  
+- 🗓️ **DateTimePicker** may behave differently on **iOS vs Android**.  
+
+---
+
